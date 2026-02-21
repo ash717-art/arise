@@ -31,10 +31,9 @@ class StatCard extends StatelessWidget {
           const SizedBox(height: 8),
           Text(
             value.toStringAsFixed(0),
-            style: Theme.of(context)
-                .textTheme
-                .displayMedium
-                ?.copyWith(color: progressColor),
+            style: Theme.of(
+              context,
+            ).textTheme.displayMedium?.copyWith(color: progressColor),
           ),
           const Spacer(),
           ClipRRect(

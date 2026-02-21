@@ -6,10 +6,12 @@ import 'package:myapp/services/progress_store.dart';
 final progressStoreProvider = Provider<ProgressStore>((ref) => ProgressStore());
 
 final playerProgressProvider =
-    StateNotifierProvider<PlayerProgressNotifier, AsyncValue<PlayerProgress>>((ref) {
-  final store = ref.watch(progressStoreProvider);
-  return PlayerProgressNotifier(store)..init();
-});
+    StateNotifierProvider<PlayerProgressNotifier, AsyncValue<PlayerProgress>>((
+      ref,
+    ) {
+      final store = ref.watch(progressStoreProvider);
+      return PlayerProgressNotifier(store)..init();
+    });
 
 class PlayerProgressNotifier extends StateNotifier<AsyncValue<PlayerProgress>> {
   final ProgressStore _store;
@@ -41,11 +43,42 @@ class PlayerProgressNotifier extends StateNotifier<AsyncValue<PlayerProgress>> {
       level += 1;
     }
 
+    // Streak logic
+    final now = DateTime.now();
+    final today = DateTime(now.year, now.month, now.day);
+    int newStreak = current.currentStreak;
+    int newHighestStreak = current.highestStreak;
+
+    if (current.lastQuestCompletionDate == null) {
+      newStreak = 1;
+    } else {
+      final lastCompletion = current.lastQuestCompletionDate!;
+      final lastCompletionDate =
+          DateTime(lastCompletion.year, lastCompletion.month, lastCompletion.day);
+      final difference = today.difference(lastCompletionDate).inDays;
+
+      if (difference == 1) {
+        newStreak++;
+      } else if (difference > 1) {
+        newStreak = 1;
+      }
+    }
+
+    if (newStreak > newHighestStreak) {
+      newHighestStreak = newStreak;
+    }
+
     final updated = current.copyWith(
       totalXp: totalXp,
       xpIntoLevel: xpInto,
       level: level,
-      questsCompleted: (current.questsCompleted + 1).clamp(0, PlayerProgress.totalProgramQuests),
+      questsCompleted: (current.questsCompleted + 1).clamp(
+        0,
+        PlayerProgress.totalProgramQuests,
+      ),
+      currentStreak: newStreak,
+      highestStreak: newHighestStreak,
+      lastQuestCompletionDate: now,
     );
 
     state = AsyncValue.data(updated);

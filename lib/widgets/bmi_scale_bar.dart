@@ -21,9 +21,17 @@ class BmiScaleBar extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      _buildSegment('Underweight', Colors.blue, totalWidth * 0.2),
+                      _buildSegment(
+                        'Underweight',
+                        Colors.blue,
+                        totalWidth * 0.2,
+                      ),
                       _buildSegment('Normal', Colors.green, totalWidth * 0.3),
-                      _buildSegment('Overweight', Colors.orange, totalWidth * 0.2),
+                      _buildSegment(
+                        'Overweight',
+                        Colors.orange,
+                        totalWidth * 0.2,
+                      ),
                       _buildSegment('Obese', Colors.red, totalWidth * 0.3),
                     ],
                   ),
@@ -33,10 +41,15 @@ class BmiScaleBar extends StatelessWidget {
                     bottom: 0,
                     child: Column(
                       children: [
-                        const Icon(Icons.arrow_drop_down, color: AppTheme.textPrimary, size: 24),
+                        const Icon(
+                          Icons.arrow_drop_down,
+                          color: AppTheme.textPrimary,
+                          size: 24,
+                        ),
                         Text(
                           bmiValue.toStringAsFixed(1),
-                          style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppTheme.textPrimary)
+                          style: Theme.of(context).textTheme.bodySmall
+                              ?.copyWith(color: AppTheme.textPrimary),
                         ),
                       ],
                     ),
@@ -54,14 +67,14 @@ class BmiScaleBar extends StatelessWidget {
     return Container(
       width: width,
       height: 10,
-      decoration: BoxDecoration(
-        color: color,
-      ),
+      decoration: BoxDecoration(color: color),
       child: Center(
         child: Text(
-          label, 
-          style: TextStyle(color: Colors.white.withAlpha(0)), // Hide text but keep space
-        )
+          label,
+          style: TextStyle(
+            color: Colors.white.withAlpha(0),
+          ), // Hide text but keep space
+        ),
       ),
     );
   }
@@ -77,6 +90,9 @@ class BmiScaleBar extends StatelessWidget {
     } else {
       percentage = 0.7 + ((bmiValue - 30) / (40 - 30)).clamp(0, 1) * 0.3;
     }
-    return (totalWidth * percentage).clamp(0, totalWidth - 10); // clamp to avoid overflow
+    return (totalWidth * percentage).clamp(
+      0,
+      totalWidth - 10,
+    ); // clamp to avoid overflow
   }
 }

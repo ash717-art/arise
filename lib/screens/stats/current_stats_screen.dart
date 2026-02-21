@@ -38,7 +38,7 @@ class CurrentStatsScreen extends StatelessWidget {
                   'Based on your answers, this is your current Arise\nstats, which reflects your lifestyle and training\nhabits.',
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    color: Colors.white.withOpacity(0.55),
+                    color: Colors.white.withAlpha(140),
                     fontSize: 14,
                     height: 1.35,
                     fontWeight: FontWeight.w500,
@@ -54,10 +54,26 @@ class CurrentStatsScreen extends StatelessWidget {
                     childAspectRatio: 1.3,
                     physics: const NeverScrollableScrollPhysics(),
                     children: const [
-                      StatCard(title: 'Strength', value: 12, progressColor: AppColors.danger),
-                      StatCard(title: 'Vitality', value: 12, progressColor: AppColors.danger),
-                      StatCard(title: 'Agility', value: 14, progressColor: AppColors.danger),
-                      StatCard(title: 'Recovery', value: 12, progressColor: AppColors.danger),
+                      StatCard(
+                        title: 'Strength',
+                        value: 12,
+                        progressColor: AppColors.danger,
+                      ),
+                      StatCard(
+                        title: 'Vitality',
+                        value: 12,
+                        progressColor: AppColors.danger,
+                      ),
+                      StatCard(
+                        title: 'Agility',
+                        value: 14,
+                        progressColor: AppColors.danger,
+                      ),
+                      StatCard(
+                        title: 'Recovery',
+                        value: 12,
+                        progressColor: AppColors.danger,
+                      ),
                     ],
                   ),
                 ),
@@ -67,7 +83,9 @@ class CurrentStatsScreen extends StatelessWidget {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (_) => const PotentialStatsScreen()),
+                      MaterialPageRoute(
+                        builder: (_) => const PotentialStatsScreen(),
+                      ),
                     );
                   },
                 ),

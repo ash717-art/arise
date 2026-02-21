@@ -20,62 +20,95 @@ class MotivationScreen extends ConsumerWidget {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
-          child: Column(
-            children: [
-              const TopProgressBar(currentStep: 3, totalSteps: 13),
-              const SizedBox(height: 30),
-              Text('What motivates you?', style: Theme.of(context).textTheme.displaySmall),
-              const SizedBox(height: 30),
-              Expanded(
-                child: ListView(
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                const TopProgressBar(currentStep: 3, totalSteps: 13),
+                const SizedBox(height: 30),
+                Text(
+                  'What motivates you?',
+                  style: Theme.of(context).textTheme.displaySmall,
+                ),
+                const SizedBox(height: 30),
+                ListView(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
                   children: [
                     MultiSelectTile(
                       title: 'Health',
-                      selected: onboardingModel.motivations.contains(Motivation.health),
-                      onTap: () => onboardingNotifier.toggleMotivation(Motivation.health),
+                      selected: onboardingModel.motivations.contains(
+                        Motivation.health,
+                      ),
+                      onTap: () => onboardingNotifier.toggleMotivation(
+                        Motivation.health,
+                      ),
                     ),
                     const SizedBox(height: 16),
                     MultiSelectTile(
                       title: 'Weight Loss',
-                      selected: onboardingModel.motivations.contains(Motivation.weightLoss),
-                      onTap: () => onboardingNotifier.toggleMotivation(Motivation.weightLoss),
+                      selected: onboardingModel.motivations.contains(
+                        Motivation.weightLoss,
+                      ),
+                      onTap: () => onboardingNotifier.toggleMotivation(
+                        Motivation.weightLoss,
+                      ),
                     ),
                     const SizedBox(height: 16),
                     MultiSelectTile(
                       title: 'Appearance',
-                      selected: onboardingModel.motivations.contains(Motivation.appearance),
-                      onTap: () => onboardingNotifier.toggleMotivation(Motivation.appearance),
+                      selected: onboardingModel.motivations.contains(
+                        Motivation.appearance,
+                      ),
+                      onTap: () => onboardingNotifier.toggleMotivation(
+                        Motivation.appearance,
+                      ),
                     ),
                     const SizedBox(height: 16),
                     MultiSelectTile(
                       title: 'Stress Relief',
-                      selected: onboardingModel.motivations.contains(Motivation.stressRelief),
-                      onTap: () => onboardingNotifier.toggleMotivation(Motivation.stressRelief),
+                      selected: onboardingModel.motivations.contains(
+                        Motivation.stressRelief,
+                      ),
+                      onTap: () => onboardingNotifier.toggleMotivation(
+                        Motivation.stressRelief,
+                      ),
                     ),
                     const SizedBox(height: 16),
                     MultiSelectTile(
                       title: 'Social Support',
-                      selected: onboardingModel.motivations.contains(Motivation.socialSupport),
-                      onTap: () => onboardingNotifier.toggleMotivation(Motivation.socialSupport),
+                      selected: onboardingModel.motivations.contains(
+                        Motivation.socialSupport,
+                      ),
+                      onTap: () => onboardingNotifier.toggleMotivation(
+                        Motivation.socialSupport,
+                      ),
                     ),
                     const SizedBox(height: 16),
                     MultiSelectTile(
                       title: 'Enjoyment',
-                      selected: onboardingModel.motivations.contains(Motivation.enjoyment),
-                      onTap: () => onboardingNotifier.toggleMotivation(Motivation.enjoyment),
+                      selected: onboardingModel.motivations.contains(
+                        Motivation.enjoyment,
+                      ),
+                      onTap: () => onboardingNotifier.toggleMotivation(
+                        Motivation.enjoyment,
+                      ),
                     ),
                   ],
                 ),
-              ),
-              BottomCTAButton(
-                text: 'Continue',
-                enabled: onboardingModel.motivations.isNotEmpty,
-                onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(builder: (_) => const FocusAreasScreen()));
-                },
-              ),
-              const SizedBox(height: 50),
-            ],
+                BottomCTAButton(
+                  text: 'Continue',
+                  enabled: onboardingModel.motivations.isNotEmpty,
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (_) => const FocusAreasScreen(),
+                      ),
+                    );
+                  },
+                ),
+                const SizedBox(height: 50),
+              ],
+            ),
           ),
         ),
       ),

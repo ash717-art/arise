@@ -20,62 +20,93 @@ class EquipmentScreen extends ConsumerWidget {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
-          child: Column(
-            children: [
-              const TopProgressBar(currentStep: 11, totalSteps: 13),
-              const SizedBox(height: 30),
-              Text('What equipment do you have?', style: Theme.of(context).textTheme.displaySmall),
-              const SizedBox(height: 30),
-              Expanded(
-                child: ListView(
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                const TopProgressBar(currentStep: 11, totalSteps: 13),
+                const SizedBox(height: 30),
+                Text(
+                  'What equipment do you have?',
+                  style: Theme.of(context).textTheme.displaySmall,
+                ),
+                const SizedBox(height: 30),
+                ListView(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
                   children: [
                     MultiSelectTile(
                       title: 'None (Bodyweight)',
-                      selected: onboardingModel.equipment.contains(Equipment.none),
-                      onTap: () => onboardingNotifier.toggleEquipment(Equipment.none),
+                      selected: onboardingModel.equipment.contains(
+                        Equipment.none,
+                      ),
+                      onTap: () =>
+                          onboardingNotifier.toggleEquipment(Equipment.none),
                     ),
                     const SizedBox(height: 16),
                     MultiSelectTile(
                       title: 'Full gym',
-                      selected: onboardingModel.equipment.contains(Equipment.fullGym),
-                      onTap: () => onboardingNotifier.toggleEquipment(Equipment.fullGym),
+                      selected: onboardingModel.equipment.contains(
+                        Equipment.fullGym,
+                      ),
+                      onTap: () =>
+                          onboardingNotifier.toggleEquipment(Equipment.fullGym),
                     ),
                     const SizedBox(height: 16),
                     MultiSelectTile(
                       title: 'Barbells',
-                      selected: onboardingModel.equipment.contains(Equipment.barbells),
-                      onTap: () => onboardingNotifier.toggleEquipment(Equipment.barbells),
+                      selected: onboardingModel.equipment.contains(
+                        Equipment.barbells,
+                      ),
+                      onTap: () => onboardingNotifier.toggleEquipment(
+                        Equipment.barbells,
+                      ),
                     ),
                     const SizedBox(height: 16),
                     MultiSelectTile(
                       title: 'Dumbbells',
-                      selected: onboardingModel.equipment.contains(Equipment.dumbbells),
-                      onTap: () => onboardingNotifier.toggleEquipment(Equipment.dumbbells),
+                      selected: onboardingModel.equipment.contains(
+                        Equipment.dumbbells,
+                      ),
+                      onTap: () => onboardingNotifier.toggleEquipment(
+                        Equipment.dumbbells,
+                      ),
                     ),
                     const SizedBox(height: 16),
                     MultiSelectTile(
                       title: 'Kettlebells',
-                      selected: onboardingModel.equipment.contains(Equipment.kettlebells),
-                      onTap: () => onboardingNotifier.toggleEquipment(Equipment.kettlebells),
+                      selected: onboardingModel.equipment.contains(
+                        Equipment.kettlebells,
+                      ),
+                      onTap: () => onboardingNotifier.toggleEquipment(
+                        Equipment.kettlebells,
+                      ),
                     ),
                     const SizedBox(height: 16),
                     MultiSelectTile(
                       title: 'Machines',
-                      selected: onboardingModel.equipment.contains(Equipment.machines),
-                      onTap: () => onboardingNotifier.toggleEquipment(Equipment.machines),
+                      selected: onboardingModel.equipment.contains(
+                        Equipment.machines,
+                      ),
+                      onTap: () => onboardingNotifier.toggleEquipment(
+                        Equipment.machines,
+                      ),
                     ),
                   ],
                 ),
-              ),
-              BottomCTAButton(
-                text: 'Continue',
-                enabled: onboardingModel.equipment.isNotEmpty,
-                onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(builder: (_) => const WorkoutFrequencyScreen()));
-                },
-              ),
-              const SizedBox(height: 50),
-            ],
+                BottomCTAButton(
+                  text: 'Continue',
+                  enabled: onboardingModel.equipment.isNotEmpty,
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (_) => const WorkoutFrequencyScreen(),
+                      ),
+                    );
+                  },
+                ),
+                const SizedBox(height: 50),
+              ],
+            ),
           ),
         ),
       ),

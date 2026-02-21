@@ -80,19 +80,20 @@ class _SyncingDataScreenState extends State<SyncingDataScreen>
                     Text(
                       'Syncing your data...',
                       style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                        color: AppTheme.neonHighlightGreen,
+                        shadows: [
+                          const Shadow(
+                            blurRadius: 10.0,
                             color: AppTheme.neonHighlightGreen,
-                            shadows: [
-                              const Shadow(
-                                blurRadius: 10.0,
-                                color: AppTheme.neonHighlightGreen,
-                              ),
-                            ],
                           ),
+                        ],
+                      ),
                     ),
                     const SizedBox(height: 24),
                     const CircularProgressIndicator(
-                      valueColor:
-                          AlwaysStoppedAnimation<Color>(AppTheme.successGreen),
+                      valueColor: AlwaysStoppedAnimation<Color>(
+                        AppTheme.successGreen,
+                      ),
                     ),
                     const SizedBox(height: 24),
                     ClipRRect(
@@ -101,7 +102,8 @@ class _SyncingDataScreenState extends State<SyncingDataScreen>
                         value: _animation.value,
                         backgroundColor: AppTheme.subtleBorder,
                         valueColor: const AlwaysStoppedAnimation<Color>(
-                            AppTheme.successGreen),
+                          AppTheme.successGreen,
+                        ),
                         minHeight: 10,
                       ),
                     ),

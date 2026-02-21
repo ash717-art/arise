@@ -43,10 +43,18 @@ class WeightTrendChart extends StatelessWidget {
               gridData: const FlGridData(show: false),
               borderData: FlBorderData(show: false),
               titlesData: const FlTitlesData(
-                leftTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
-                topTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
-                rightTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
-                bottomTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                leftTitles: AxisTitles(
+                  sideTitles: SideTitles(showTitles: false),
+                ),
+                topTitles: AxisTitles(
+                  sideTitles: SideTitles(showTitles: false),
+                ),
+                rightTitles: AxisTitles(
+                  sideTitles: SideTitles(showTitles: false),
+                ),
+                bottomTitles: AxisTitles(
+                  sideTitles: SideTitles(showTitles: false),
+                ),
               ),
               lineTouchData: const LineTouchData(enabled: false),
               lineBarsData: [
@@ -57,21 +65,21 @@ class WeightTrendChart extends StatelessWidget {
                   gradient: LinearGradient(
                     begin: Alignment.centerLeft,
                     end: Alignment.centerRight,
-                    colors: [
-                      AppColors.warningOrange,
-                      AppColors.successGreen,
-                    ],
+                    colors: [AppColors.warningOrange, AppColors.successGreen],
                   ),
                   dotData: FlDotData(
                     show: true,
-                    checkToShowDot: (spot, _) => spot.x == 0 || spot.x == points.length - 1,
+                    checkToShowDot: (spot, _) =>
+                        spot.x == 0 || spot.x == points.length - 1,
                     getDotPainter: (spot, percent, bar, index) {
                       final isEnd = spot.x == points.length - 1;
                       return FlDotCirclePainter(
                         radius: 5,
-                        color: isEnd ? AppColors.successGreen : AppColors.warningOrange,
+                        color: isEnd
+                            ? AppColors.successGreen
+                            : AppColors.warningOrange,
                         strokeWidth: 2,
-                        strokeColor: Colors.black.withOpacity(0.2),
+                        strokeColor: Colors.black.withAlpha(51),
                       );
                     },
                   ),
@@ -81,7 +89,7 @@ class WeightTrendChart extends StatelessWidget {
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
                       colors: [
-                        AppTheme.primaryAccent.withOpacity(0.12),
+                        AppTheme.primaryAccent.withAlpha(31),
                         Colors.transparent,
                       ],
                     ),
@@ -95,7 +103,9 @@ class WeightTrendChart extends StatelessWidget {
             top: 8,
             child: Text(
               startLabel,
-              style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppTheme.textSecondary),
+              style: Theme.of(
+                context,
+              ).textTheme.bodySmall?.copyWith(color: AppTheme.textSecondary),
             ),
           ),
           Positioned(
@@ -103,7 +113,9 @@ class WeightTrendChart extends StatelessWidget {
             bottom: 0,
             child: Text(
               endLabel,
-              style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppTheme.successGreen),
+              style: Theme.of(
+                context,
+              ).textTheme.bodySmall?.copyWith(color: AppTheme.successGreen),
             ),
           ),
         ],

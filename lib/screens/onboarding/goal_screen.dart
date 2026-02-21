@@ -20,45 +20,53 @@ class GoalScreen extends ConsumerWidget {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
-          child: Column(
-            children: [
-              const TopProgressBar(currentStep: 2, totalSteps: 13),
-              const SizedBox(height: 30),
-              Text('Choose your goal', style: Theme.of(context).textTheme.displaySmall),
-              const SizedBox(height: 30),
-              OptionTile(
-                title: 'Build Muscle',
-                selected: onboardingModel.goal == Goal.buildMuscle,
-                onTap: () => onboardingNotifier.setGoal(Goal.buildMuscle),
-              ),
-              const SizedBox(height: 16),
-              OptionTile(
-                title: 'Lose Weight',
-                selected: onboardingModel.goal == Goal.loseWeight,
-                onTap: () => onboardingNotifier.setGoal(Goal.loseWeight),
-              ),
-              const SizedBox(height: 16),
-              OptionTile(
-                title: 'Look Better',
-                selected: onboardingModel.goal == Goal.lookBetter,
-                onTap: () => onboardingNotifier.setGoal(Goal.lookBetter),
-              ),
-              const SizedBox(height: 16),
-              OptionTile(
-                title: 'Stay In Shape',
-                selected: onboardingModel.goal == Goal.stayInShape,
-                onTap: () => onboardingNotifier.setGoal(Goal.stayInShape),
-              ),
-              const Spacer(),
-              BottomCTAButton(
-                text: 'Continue',
-                enabled: onboardingModel.goal != null,
-                onTap: () {
-                   Navigator.of(context).push(MaterialPageRoute(builder: (_) => const MotivationScreen()));
-                },
-              ),
-              const SizedBox(height: 50),
-            ],
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                const TopProgressBar(currentStep: 2, totalSteps: 13),
+                const SizedBox(height: 30),
+                Text(
+                  'Choose your goal',
+                  style: Theme.of(context).textTheme.displaySmall,
+                ),
+                const SizedBox(height: 30),
+                OptionTile(
+                  title: 'Build Muscle',
+                  selected: onboardingModel.goal == Goal.buildMuscle,
+                  onTap: () => onboardingNotifier.setGoal(Goal.buildMuscle),
+                ),
+                const SizedBox(height: 16),
+                OptionTile(
+                  title: 'Lose Weight',
+                  selected: onboardingModel.goal == Goal.loseWeight,
+                  onTap: () => onboardingNotifier.setGoal(Goal.loseWeight),
+                ),
+                const SizedBox(height: 16),
+                OptionTile(
+                  title: 'Look Better',
+                  selected: onboardingModel.goal == Goal.lookBetter,
+                  onTap: () => onboardingNotifier.setGoal(Goal.lookBetter),
+                ),
+                const SizedBox(height: 16),
+                OptionTile(
+                  title: 'Stay In Shape',
+                  selected: onboardingModel.goal == Goal.stayInShape,
+                  onTap: () => onboardingNotifier.setGoal(Goal.stayInShape),
+                ),
+                BottomCTAButton(
+                  text: 'Continue',
+                  enabled: onboardingModel.goal != null,
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (_) => const MotivationScreen(),
+                      ),
+                    );
+                  },
+                ),
+                const SizedBox(height: 50),
+              ],
+            ),
           ),
         ),
       ),

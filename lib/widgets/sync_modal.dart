@@ -35,27 +35,25 @@ class SyncModal extends StatelessWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text(
-                    title,
-                    style: Theme.of(context).textTheme.headlineSmall,
-                  ),
+                  Text(title, style: Theme.of(context).textTheme.headlineSmall),
                   const SizedBox(height: 16),
                   Text(
                     text,
                     style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                      color: AppTheme.neonHighlightGreen,
+                      shadows: [
+                        const Shadow(
+                          blurRadius: 10.0,
                           color: AppTheme.neonHighlightGreen,
-                          shadows: [
-                            const Shadow(
-                              blurRadius: 10.0,
-                              color: AppTheme.neonHighlightGreen,
-                            ),
-                          ],
                         ),
+                      ],
+                    ),
                   ),
                   const SizedBox(height: 24),
                   const CircularProgressIndicator(
-                    valueColor:
-                        AlwaysStoppedAnimation<Color>(AppTheme.successGreen),
+                    valueColor: AlwaysStoppedAnimation<Color>(
+                      AppTheme.successGreen,
+                    ),
                   ),
                 ],
               ),
@@ -67,7 +65,10 @@ class SyncModal extends StatelessWidget {
   }
 }
 
-void showSyncModal(BuildContext context, {required VoidCallback onSynced}) async {
+void showSyncModal(
+  BuildContext context, {
+  required VoidCallback onSynced,
+}) async {
   showDialog(
     context: context,
     barrierDismissible: false,

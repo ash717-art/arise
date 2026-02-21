@@ -28,7 +28,7 @@ class DashboardScreen extends ConsumerWidget {
             _StreakTrackerCard(),
             SizedBox(height: 24),
             _QuickStats(),
-             SizedBox(height: 24),
+            SizedBox(height: 24),
             _MilestoneCard(),
           ],
         ),
@@ -52,7 +52,10 @@ class _Header extends ConsumerWidget {
           children: [
             Text('WELCOME BACK,', style: Theme.of(context).textTheme.bodyLarge),
             const SizedBox(height: 2),
-            Text(progress.valueOrNull?.playerName ?? 'PLAYER ONE', style: Theme.of(context).textTheme.displayMedium),
+            Text(
+              progress.valueOrNull?.playerName ?? 'PLAYER ONE',
+              style: Theme.of(context).textTheme.displayMedium,
+            ),
           ],
         ),
         progress.when(
@@ -69,14 +72,26 @@ class _Header extends ConsumerWidget {
           data: (p) => Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              Text('RANK: ${p.rank}', style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppTheme.textSecondary)),
+              Text(
+                'RANK: ${p.rank}',
+                style: Theme.of(
+                  context,
+                ).textTheme.bodySmall?.copyWith(color: AppTheme.textSecondary),
+              ),
               const SizedBox(height: 2),
               Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text('LVL ${p.level}', style: Theme.of(context).textTheme.headlineSmall),
+                  Text(
+                    'LVL ${p.level}',
+                    style: Theme.of(context).textTheme.headlineSmall,
+                  ),
                   const SizedBox(width: 6),
-                  const Icon(Icons.emoji_events, color: AppTheme.primaryAccent, size: 18),
+                  const Icon(
+                    Icons.emoji_events,
+                    color: AppTheme.primaryAccent,
+                    size: 18,
+                  ),
                 ],
               ),
             ],
@@ -95,19 +110,19 @@ class _TodaysWorkoutCard extends ConsumerWidget {
     final dailyQuestAsync = ref.watch(dailyQuestProvider);
 
     return Container(
-       padding: const EdgeInsets.all(20),
-        decoration: BoxDecoration(
-          color: AppTheme.tileBackground,
-          borderRadius: BorderRadius.circular(20),
-          border: Border.all(color: AppTheme.subtleBorder),
-           boxShadow: [
-            BoxShadow(
-              color: AppTheme.neonHighlightGreen.withOpacity(0.1),
-              blurRadius: 20,
-              spreadRadius: 2,
-            ),
-          ],
-        ),
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: AppTheme.tileBackground,
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: AppTheme.subtleBorder),
+        boxShadow: [
+          BoxShadow(
+            color: AppTheme.neonHighlightGreen.withAlpha(26),
+            blurRadius: 20,
+            spreadRadius: 2,
+          ),
+        ],
+      ),
       child: dailyQuestAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (err, stack) => Center(child: Text('Error: $err')),
@@ -116,21 +131,27 @@ class _TodaysWorkoutCard extends ConsumerWidget {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Today\'s Workout', style: Theme.of(context).textTheme.headlineSmall),
+              Text(
+                'Today\'s Workout',
+                style: Theme.of(context).textTheme.headlineSmall,
+              ),
               const SizedBox(height: 8),
-              Text('${quest.exercises.length} exercises • ${quest.xpReward} XP • ~$duration min', style: Theme.of(context).textTheme.bodyMedium),
+              Text(
+                '${quest.exercises.length} exercises • ${quest.xpReward} XP • ~$duration min',
+                style: Theme.of(context).textTheme.bodyMedium,
+              ),
               const SizedBox(height: 16),
-               Center(
-                 child: ElevatedButton(
-                    onPressed: () {
-                       showDialog(
-                        context: context,
-                        builder: (_) => QuestInfoModal(quest: quest),
-                      );
-                    },
-                    child: const Text('Start Workout'),
-                  ),
-               ),
+              Center(
+                child: ElevatedButton(
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (_) => QuestInfoModal(quest: quest),
+                    );
+                  },
+                  child: const Text('Start Workout'),
+                ),
+              ),
             ],
           );
         },
@@ -167,7 +188,12 @@ class _XpLevelCard extends ConsumerWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text('XP', style: Theme.of(context).textTheme.headlineSmall),
-                  Text('NEXT RANK: ASCENDING', style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppTheme.textSecondary)),
+                  Text(
+                    'NEXT RANK: ASCENDING',
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      color: AppTheme.textSecondary,
+                    ),
+                  ),
                 ],
               ),
               const SizedBox(height: 12),
@@ -176,7 +202,9 @@ class _XpLevelCard extends ConsumerWidget {
                 child: LinearProgressIndicator(
                   value: p.levelProgress.clamp(0, 1),
                   backgroundColor: AppTheme.subtleBorder,
-                  valueColor: const AlwaysStoppedAnimation<Color>(AppTheme.primaryAccent),
+                  valueColor: const AlwaysStoppedAnimation<Color>(
+                    AppTheme.primaryAccent,
+                  ),
                   minHeight: 12,
                 ),
               ),
@@ -184,14 +212,24 @@ class _XpLevelCard extends ConsumerWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('XP: ${p.totalXp}', style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppTheme.textSecondary)),
-                  Text('$current / $needed', style: Theme.of(context).textTheme.bodySmall),
+                  Text(
+                    'XP: ${p.totalXp}',
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      color: AppTheme.textSecondary,
+                    ),
+                  ),
+                  Text(
+                    '$current / $needed',
+                    style: Theme.of(context).textTheme.bodySmall,
+                  ),
                 ],
               ),
               const SizedBox(height: 8),
               Text(
                 '90-day quests: ${p.questsCompleted}/${PlayerProgress.totalProgramQuests} • S-rank unlocks only at day 90',
-                style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppTheme.textSecondary),
+                style: Theme.of(
+                  context,
+                ).textTheme.bodySmall?.copyWith(color: AppTheme.textSecondary),
               ),
             ],
           );
@@ -201,11 +239,13 @@ class _XpLevelCard extends ConsumerWidget {
   }
 }
 
-class _StreakTrackerCard extends StatelessWidget {
+class _StreakTrackerCard extends ConsumerWidget {
   const _StreakTrackerCard();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final progress = ref.watch(playerProgressProvider);
+
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
@@ -215,26 +255,56 @@ class _StreakTrackerCard extends StatelessWidget {
       ),
       child: Column(
         children: [
-           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Column(
-                children: [
-                  Text('🔥 5', style: Theme.of(context).textTheme.displaySmall),
-                  Text('Current Streak', style: Theme.of(context).textTheme.bodyMedium),
-                ],
-              ),
-              Container(height: 40, width: 1, color: AppTheme.subtleBorder),
-              Column(
-                children: [
-                  Text('🏆 12', style: Theme.of(context).textTheme.displaySmall),
-                   Text('Best Streak', style: Theme.of(context).textTheme.bodyMedium),
-                ],
-              )
-            ],
+          progress.when(
+            loading: () => const Center(child: CircularProgressIndicator()),
+            error: (e, _) => Text('Error loading progress: $e'),
+            data: (p) => Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Expanded(
+                  child: Column(
+                    children: [
+                      FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Text('🔥 ${p.currentStreak}',
+                            style: Theme.of(context).textTheme.displaySmall),
+                      ),
+                      Text(
+                        'Current Streak',
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                    height: 40, width: 1, color: AppTheme.subtleBorder),
+                Expanded(
+                  child: Column(
+                    children: [
+                      FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Text(
+                          '🏆 ${p.highestStreak}',
+                          style: Theme.of(context).textTheme.displaySmall,
+                        ),
+                      ),
+                      Text(
+                        'Best Streak',
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
           const SizedBox(height: 16),
-          Text('Consistency builds strength.', style: Theme.of(context).textTheme.bodySmall?.copyWith(fontStyle: FontStyle.italic)),
+          Text(
+            'Consistency builds strength.',
+            style: Theme.of(
+              context,
+            ).textTheme.bodySmall?.copyWith(fontStyle: FontStyle.italic),
+          ),
         ],
       ),
     );
@@ -248,11 +318,17 @@ class _QuickStats extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Expanded(child: _StatTile(title: 'Calories', value: '750')),
+        Expanded(
+          child: _StatTile(title: 'Calories', value: '750'),
+        ),
         const SizedBox(width: 16),
-        Expanded(child: _StatTile(title: 'Minutes', value: '45')),
+        Expanded(
+          child: _StatTile(title: 'Minutes', value: '45'),
+        ),
         const SizedBox(width: 16),
-        Expanded(child: _StatTile(title: 'Completion', value: '80%')),
+        Expanded(
+          child: _StatTile(title: 'Completion', value: '80%'),
+        ),
       ],
     );
   }
@@ -267,7 +343,7 @@ class _StatTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(16),
-       decoration: BoxDecoration(
+      decoration: BoxDecoration(
         color: AppTheme.tileBackground,
         borderRadius: BorderRadius.circular(20),
         border: Border.all(color: AppTheme.subtleBorder),
@@ -282,7 +358,6 @@ class _StatTile extends StatelessWidget {
     );
   }
 }
-
 
 class _MilestoneCard extends StatelessWidget {
   const _MilestoneCard();
@@ -303,7 +378,9 @@ class _MilestoneCard extends StatelessWidget {
           const SizedBox(width: 12),
           Text(
             '3 workouts to next level.',
-            style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: AppTheme.neonHighlightGreen)
+            style: Theme.of(
+              context,
+            ).textTheme.bodyLarge?.copyWith(color: AppTheme.neonHighlightGreen),
           ),
         ],
       ),

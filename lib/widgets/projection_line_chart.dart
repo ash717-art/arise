@@ -10,8 +10,8 @@ class ProjectionLineChart extends StatelessWidget {
 
   const ProjectionLineChart({
     super.key,
-    this.height = 220,
-    this.showLegend = true,
+    required this.height,
+    this.showLegend = false,
     this.showTitle = true,
     this.showRankLabels = true,
   });
@@ -22,153 +22,128 @@ class ProjectionLineChart extends StatelessWidget {
       height: height,
       child: LineChart(
         LineChartData(
-          minX: 0,
-          maxX: 3,
-          minY: 0,
-          maxY: 6,
-          titlesData: FlTitlesData(
+          gridData: FlGridData(
             show: true,
+            drawVerticalLine: true,
+            verticalInterval: 1,
+            drawHorizontalLine: false,
+            getDrawingVerticalLine: (value) {
+              if (value == 0) {
+                return const FlLine(color: Colors.transparent);
+              }
+              return const FlLine(
+                color: AppColors.mutedGreyLine,
+                strokeWidth: 1,
+                dashArray: [4, 4],
+              );
+            },
+          ),
+          titlesData: FlTitlesData(
             bottomTitles: AxisTitles(
               sideTitles: SideTitles(
-                showTitles: true,
-                reservedSize: 30,
+                showTitles: showTitle,
                 getTitlesWidget: (value, meta) {
-                  final style = TextStyle(
-                    color: Colors.white.withOpacity(0.55),
+                  const style = TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
                     fontSize: 12,
-                    fontWeight: FontWeight.w600,
                   );
+                  String text;
                   switch (value.toInt()) {
+                    case 0:
+                      text = 'Start';
+                      break;
                     case 1:
-                      return Padding(
-                        padding: const EdgeInsets.only(top: 8.0),
-                        child: Text('month 1', style: style),
-                      );
+                      text = 'Month 1';
+                      break;
                     case 2:
-                      return Padding(
-                        padding: const EdgeInsets.only(top: 8.0),
-                        child: Text('month 3', style: style.copyWith(color: AppColors.primary)),
-                      );
+                      text = 'Month 2';
+                      break;
                     case 3:
-                      return Padding(
-                        padding: const EdgeInsets.only(top: 8.0),
-                        child: Text('month 4', style: style),
-                      );
+                      text = 'Month 3';
+                      break;
                     default:
                       return const SizedBox.shrink();
                   }
+                  return SideTitleWidget(
+                    axisSide: meta.axisSide,
+                    space: 10,
+                    child: Text(text, style: style),
+                  );
                 },
+                reservedSize: 30,
+                interval: 1,
               ),
             ),
             leftTitles: AxisTitles(
               sideTitles: SideTitles(
                 showTitles: showRankLabels,
-                reservedSize: 30,
                 getTitlesWidget: (value, meta) {
-                  final style = TextStyle(
-                    color: Colors.white.withOpacity(0.65),
+                  const style = TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
                     fontSize: 12,
-                    fontWeight: FontWeight.w700,
                   );
+                  String text;
                   switch (value.toInt()) {
                     case 0:
-                      return Text('A', style: style);
+                      text = 'E';
+                      break;
                     case 1:
-                      return Text('B', style: style);
+                      text = 'D';
+                      break;
                     case 2:
-                      return Text('C', style: style);
+                      text = 'C';
+                      break;
                     case 3:
-                      return Text('D', style: style);
+                      text = 'B';
+                      break;
                     case 4:
-                      return Text('E', style: style);
+                      text = 'A';
+                      break;
                     case 5:
-                      return Text('S', style: style);
+                      text = 'S';
+                      break;
                     default:
                       return const SizedBox.shrink();
                   }
+                  return Text(text, style: style, textAlign: TextAlign.center);
                 },
+                reservedSize: 40,
+                interval: 1,
               ),
             ),
-            rightTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
-            topTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
-          ),
-          gridData: FlGridData(
-            show: true,
-            drawVerticalLine: false,
-            horizontalInterval: 1,
-            getDrawingHorizontalLine: (value) => FlLine(
-              color: Colors.white.withOpacity(0.06),
-              strokeWidth: 1,
+            topTitles: const AxisTitles(
+              sideTitles: SideTitles(showTitles: false),
+            ),
+            rightTitles: const AxisTitles(
+              sideTitles: SideTitles(showTitles: false),
             ),
           ),
           borderData: FlBorderData(show: false),
+          minX: 0,
+          maxX: 3,
+          minY: 0,
+          maxY: 5.5,
           lineBarsData: [
-            // with Arise
             LineChartBarData(
               spots: const [
-                FlSpot(0, 0.3),
-                FlSpot(1, 2.1),
-                FlSpot(2, 3.4),
-                FlSpot(2.2, 4.0),
-                FlSpot(3, 5.0),
+                FlSpot(0, 0.2), // Start at E
+                FlSpot(1, 1.2), // Month 1 at D
+                FlSpot(2, 2.8), // Month 2 at C+
+                FlSpot(3, 4.2), // Month 3 at A
               ],
               isCurved: true,
-              curveSmoothness: 0.22,
-              color: AppColors.primary,
-              barWidth: 3.5,
-              isStrokeCapRound: true,
-              dotData: FlDotData(
-                show: true,
-                getDotPainter: (spot, percent, barData, index) {
-                  final isFocus = (spot.x - 2).abs() < 0.05;
-                  return FlDotCirclePainter(
-                    radius: isFocus ? 8 : 4,
-                    color: isFocus ? AppColors.primary.withOpacity(0.25) : AppColors.primary,
-                    strokeWidth: isFocus ? 2 : 0,
-                    strokeColor: isFocus ? AppColors.primary : Colors.transparent,
-                  );
-                },
-              ),
-              belowBarData: BarAreaData(
-                show: true,
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                    AppColors.primary.withOpacity(0.35),
-                    AppColors.primary.withOpacity(0.0),
-                  ],
-                ),
-              ),
-            ),
-            // without Arise (flat gray)
-            LineChartBarData(
-              spots: const [
-                FlSpot(0, 0.3),
-                FlSpot(1, 0.8),
-                FlSpot(2, 0.8),
-                FlSpot(3, 1.0),
-              ],
-              isCurved: true,
-              curveSmoothness: 0.25,
-              color: Colors.white.withOpacity(0.35),
-              barWidth: 2.5,
+              color: AppColors.success,
+              barWidth: 4,
               isStrokeCapRound: true,
               dotData: const FlDotData(show: false),
-              belowBarData: BarAreaData(show: false),
-            ),
-          ],
-          extraLinesData: ExtraLinesData(verticalLines: [
-            VerticalLine(
-              x: 2,
-              color: AppColors.primary.withOpacity(0.7),
-              strokeWidth: 2,
-              dashArray: [6, 6],
-              label: VerticalLineLabel(
-                show: false,
+              belowBarData: BarAreaData(
+                show: true,
+                color: AppColors.success.withAlpha(51),
               ),
             ),
-          ]),
+          ],
         ),
       ),
     );

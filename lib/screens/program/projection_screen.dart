@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:myapp/screens/main_screen.dart';
 import 'package:myapp/theme/colors.dart';
 import 'package:myapp/theme/theme.dart';
 import 'package:myapp/widgets/bottom_cta_button.dart';
@@ -21,61 +20,67 @@ class ProjectionScreen extends StatelessWidget {
           ),
         ),
         child: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(24, 18, 24, 24),
-            child: Column(
-              children: [
-                const SizedBox(height: 20),
-                const Text(
-                  'Give yourself just 90 days',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 30,
-                    fontWeight: FontWeight.w900,
+          child: Column(
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  padding: const EdgeInsets.fromLTRB(24, 18, 24, 24),
+                  child: Column(
+                    children: [
+                      const SizedBox(height: 20),
+                      const Text(
+                        'Give yourself just 90 days',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 30,
+                          fontWeight: FontWeight.w900,
+                        ),
+                      ),
+                      const SizedBox(height: 22),
+                      const ProjectionLineChart(height: 260),
+                      const SizedBox(height: 22),
+                      const _BenefitCard(
+                        titleBold: 'Your ',
+                        highlight: 'strength',
+                        titleTail: ' will increase significantly',
+                        subtitle:
+                            'Progressive overload training will help you lift\nheavier weights and build lean muscle',
+                      ),
+                      const SizedBox(height: 14),
+                      const _BenefitCard(
+                        titleBold: "You'll have more ",
+                        highlight: 'energy',
+                        titleTail: '',
+                        subtitle:
+                            "Better conditioning means you won't get tired\nduring daily activities",
+                      ),
+                      const SizedBox(height: 14),
+                      const _BenefitCard(
+                        titleBold: 'Your ',
+                        highlight: 'confidence',
+                        titleTail: ' will drastically improve',
+                        subtitle:
+                            "As you transform your body, you'll feel\nempowered and unstoppable",
+                      ),
+                    ],
                   ),
                 ),
-                const SizedBox(height: 22),
-                const ProjectionLineChart(height: 260),
-                const SizedBox(height: 22),
-
-                _BenefitCard(
-                  titleBold: 'Your ',
-                  highlight: 'strength',
-                  titleTail: ' will increase significantly',
-                  subtitle: 'Progressive overload training will help you lift\nheavier weights and build lean muscle',
-                ),
-                const SizedBox(height: 14),
-                _BenefitCard(
-                  titleBold: "You'll have more ",
-                  highlight: 'energy',
-                  titleTail: '',
-                  subtitle: "Better conditioning means you won't get tired\nduring daily activities",
-                ),
-                const SizedBox(height: 14),
-                _BenefitCard(
-                  titleBold: 'Your ',
-                  highlight: 'confidence',
-                  titleTail: ' will drastically improve',
-                  subtitle: "As you transform your body, you'll feel\nempowered and unstoppable",
-                ),
-
-                const Spacer(),
-                BottomCTAButton(
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(24, 0, 24, 24),
+                child: BottomCTAButton(
                   text: 'Unlock My Potential',
                   onPressed: () {
                     Navigator.pushReplacement(
                       context,
-                      MaterialPageRoute(builder: (_) => FingerprintLockInScreen(onLockedIn: () {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(builder: (context) => const MainScreen()),
-                        );
-                      })),
+                      MaterialPageRoute(
+                        builder: (_) => const FingerprintLockInScreen(),
+                      ),
                     );
                   },
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
@@ -101,9 +106,9 @@ class _BenefitCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.06),
+        color: Colors.white.withAlpha(15),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: Colors.white.withOpacity(0.10)),
+        border: Border.all(color: Colors.white.withAlpha(26)),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -124,10 +129,17 @@ class _BenefitCard extends StatelessWidget {
               children: [
                 RichText(
                   text: TextSpan(
-                    style: const TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w800),
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w800,
+                    ),
                     children: [
                       TextSpan(text: titleBold),
-                      TextSpan(text: highlight, style: const TextStyle(color: AppColors.success)),
+                      TextSpan(
+                        text: highlight,
+                        style: const TextStyle(color: AppColors.success),
+                      ),
                       TextSpan(text: titleTail),
                     ],
                   ),
@@ -135,7 +147,11 @@ class _BenefitCard extends StatelessWidget {
                 const SizedBox(height: 6),
                 Text(
                   subtitle,
-                  style: TextStyle(color: Colors.white.withOpacity(0.55), fontSize: 13, height: 1.25),
+                  style: TextStyle(
+                    color: Colors.white.withAlpha(140),
+                    fontSize: 13,
+                    height: 1.25,
+                  ),
                 ),
               ],
             ),

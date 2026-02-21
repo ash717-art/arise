@@ -19,39 +19,45 @@ class GenderScreen extends ConsumerWidget {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
-          child: Column(
-            children: [
-              const TopProgressBar(currentStep: 1, totalSteps: 13),
-              const SizedBox(height: 30),
-              Text('Choose your gender', style: Theme.of(context).textTheme.displaySmall),
-              const SizedBox(height: 30),
-              OptionTile(
-                title: 'Male',
-                selected: onboardingModel.gender == Gender.male,
-                onTap: () => onboardingNotifier.setGender(Gender.male),
-              ),
-              const SizedBox(height: 16),
-              OptionTile(
-                title: 'Female',
-                selected: onboardingModel.gender == Gender.female,
-                onTap: () => onboardingNotifier.setGender(Gender.female),
-              ),
-              const SizedBox(height: 16),
-              OptionTile(
-                title: 'Other',
-                selected: onboardingModel.gender == Gender.other,
-                onTap: () => onboardingNotifier.setGender(Gender.other),
-              ),
-              const Spacer(),
-              BottomCTAButton(
-                text: 'Continue',
-                enabled: onboardingModel.gender != null,
-                onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(builder: (_) => const GoalScreen()));
-                },
-              ),
-              const SizedBox(height: 50),
-            ],
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                const TopProgressBar(currentStep: 1, totalSteps: 13),
+                const SizedBox(height: 30),
+                Text(
+                  'Choose your gender',
+                  style: Theme.of(context).textTheme.displaySmall,
+                ),
+                const SizedBox(height: 30),
+                OptionTile(
+                  title: 'Male',
+                  selected: onboardingModel.gender == Gender.male,
+                  onTap: () => onboardingNotifier.setGender(Gender.male),
+                ),
+                const SizedBox(height: 16),
+                OptionTile(
+                  title: 'Female',
+                  selected: onboardingModel.gender == Gender.female,
+                  onTap: () => onboardingNotifier.setGender(Gender.female),
+                ),
+                const SizedBox(height: 16),
+                OptionTile(
+                  title: 'Other',
+                  selected: onboardingModel.gender == Gender.other,
+                  onTap: () => onboardingNotifier.setGender(Gender.other),
+                ),
+                BottomCTAButton(
+                  text: 'Continue',
+                  enabled: onboardingModel.gender != null,
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(builder: (_) => const GoalScreen()),
+                    );
+                  },
+                ),
+                const SizedBox(height: 50),
+              ],
+            ),
           ),
         ),
       ),

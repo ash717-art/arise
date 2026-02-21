@@ -20,62 +20,79 @@ class HealthIssuesScreen extends ConsumerWidget {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
-          child: Column(
-            children: [
-              const TopProgressBar(currentStep: 10, totalSteps: 13),
-              const SizedBox(height: 30),
-              Text('Any health issues?', style: Theme.of(context).textTheme.displaySmall),
-              const SizedBox(height: 30),
-              Expanded(
-                child: ListView(
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                const TopProgressBar(currentStep: 10, totalSteps: 13),
+                const SizedBox(height: 30),
+                Text(
+                  'Any health issues?',
+                  style: Theme.of(context).textTheme.displaySmall,
+                ),
+                const SizedBox(height: 30),
+                ListView(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
                   children: [
                     OptionTile(
                       title: 'None',
                       selected: onboardingModel.healthIssue == HealthIssue.none,
-                      onTap: () => onboardingNotifier.setHealthIssue(HealthIssue.none),
+                      onTap: () =>
+                          onboardingNotifier.setHealthIssue(HealthIssue.none),
                     ),
                     const SizedBox(height: 16),
                     OptionTile(
                       title: 'Knee',
                       selected: onboardingModel.healthIssue == HealthIssue.knee,
-                      onTap: () => onboardingNotifier.setHealthIssue(HealthIssue.knee),
+                      onTap: () =>
+                          onboardingNotifier.setHealthIssue(HealthIssue.knee),
                     ),
                     const SizedBox(height: 16),
                     OptionTile(
                       title: 'Hip Joints',
                       selected: onboardingModel.healthIssue == HealthIssue.hip,
-                      onTap: () => onboardingNotifier.setHealthIssue(HealthIssue.hip),
+                      onTap: () =>
+                          onboardingNotifier.setHealthIssue(HealthIssue.hip),
                     ),
                     const SizedBox(height: 16),
                     OptionTile(
                       title: 'Back or Hernia',
                       selected: onboardingModel.healthIssue == HealthIssue.back,
-                      onTap: () => onboardingNotifier.setHealthIssue(HealthIssue.back),
+                      onTap: () =>
+                          onboardingNotifier.setHealthIssue(HealthIssue.back),
                     ),
                     const SizedBox(height: 16),
                     OptionTile(
                       title: 'Arms and Shoulders',
                       selected: onboardingModel.healthIssue == HealthIssue.arms,
-                      onTap: () => onboardingNotifier.setHealthIssue(HealthIssue.arms),
+                      onTap: () =>
+                          onboardingNotifier.setHealthIssue(HealthIssue.arms),
                     ),
                     const SizedBox(height: 16),
                     OptionTile(
                       title: 'Cant Do Jumps',
-                      selected: onboardingModel.healthIssue == HealthIssue.noJumps,
-                      onTap: () => onboardingNotifier.setHealthIssue(HealthIssue.noJumps),
+                      selected:
+                          onboardingModel.healthIssue == HealthIssue.noJumps,
+                      onTap: () => onboardingNotifier.setHealthIssue(
+                        HealthIssue.noJumps,
+                      ),
                     ),
                   ],
                 ),
-              ),
-              BottomCTAButton(
-                text: 'Continue',
-                enabled: onboardingModel.healthIssue != null,
-                onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(builder: (_) => const EquipmentScreen()));
-                },
-              ),
-              const SizedBox(height: 50),
-            ],
+                BottomCTAButton(
+                  text: 'Continue',
+                  enabled: onboardingModel.healthIssue != null,
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (_) => const EquipmentScreen(),
+                      ),
+                    );
+                  },
+                ),
+                const SizedBox(height: 50),
+              ],
+            ),
           ),
         ),
       ),

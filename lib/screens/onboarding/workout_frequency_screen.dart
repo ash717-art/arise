@@ -18,39 +18,51 @@ class WorkoutFrequencyScreen extends ConsumerWidget {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
-          child: Column(
-            children: [
-              const TopProgressBar(currentStep: 12, totalSteps: 13),
-              const SizedBox(height: 30),
-              Text('How often would you like to work out?', style: Theme.of(context).textTheme.displaySmall, textAlign: TextAlign.center,),
-              const SizedBox(height: 50),
-              Text(
-                '${onboardingModel.workoutsPerWeek}x',
-                style: Theme.of(context).textTheme.displayLarge?.copyWith(fontSize: 72),
-              ),
-              Text(
-                '${onboardingModel.workoutsPerWeek} workouts a week',
-                style: Theme.of(context).textTheme.bodyMedium,
-              ),
-              const Spacer(),
-              Slider(
-                value: onboardingModel.workoutsPerWeek.toDouble(),
-                min: 1,
-                max: 7,
-                divisions: 6,
-                onChanged: (double value) {
-                  onboardingNotifier.setWorkoutsPerWeek(value.toInt());
-                },
-              ),
-              const Spacer(),
-              BottomCTAButton(
-                text: 'Continue',
-                onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(builder: (_) => const WorkoutDaysScreen()));
-                },
-              ),
-              const SizedBox(height: 50),
-            ],
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                const TopProgressBar(currentStep: 12, totalSteps: 13),
+                const SizedBox(height: 30),
+                Text(
+                  'How often would you like to work out?',
+                  style: Theme.of(context).textTheme.displaySmall,
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 50),
+                Text(
+                  '${onboardingModel.workoutsPerWeek}x',
+                  style: Theme.of(
+                    context,
+                  ).textTheme.displayLarge?.copyWith(fontSize: 72),
+                ),
+                Text(
+                  '${onboardingModel.workoutsPerWeek} workouts a week',
+                  style: Theme.of(context).textTheme.bodyMedium,
+                ),
+                const SizedBox(height: 30),
+                Slider(
+                  value: onboardingModel.workoutsPerWeek.toDouble(),
+                  min: 1,
+                  max: 7,
+                  divisions: 6,
+                  onChanged: (double value) {
+                    onboardingNotifier.setWorkoutsPerWeek(value.toInt());
+                  },
+                ),
+                const SizedBox(height: 30),
+                BottomCTAButton(
+                  text: 'Continue',
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (_) => const WorkoutDaysScreen(),
+                      ),
+                    );
+                  },
+                ),
+                const SizedBox(height: 50),
+              ],
+            ),
           ),
         ),
       ),

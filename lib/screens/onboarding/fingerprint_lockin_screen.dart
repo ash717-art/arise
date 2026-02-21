@@ -5,16 +5,21 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/services.dart';
 import 'package:myapp/theme/colors.dart';
 import 'package:myapp/providers/progress_provider.dart';
+import 'package:myapp/screens/main_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class FingerprintLockInScreen extends ConsumerStatefulWidget {
-  final VoidCallback onLockedIn;
-  const FingerprintLockInScreen({super.key, required this.onLockedIn});
+  final VoidCallback? onLockedIn;
+  const FingerprintLockInScreen({super.key, this.onLockedIn});
 
   @override
-  ConsumerState<FingerprintLockInScreen> createState() => _FingerprintLockInScreenState();
+  ConsumerState<FingerprintLockInScreen> createState() =>
+      _FingerprintLockInScreenState();
 }
 
-class _FingerprintLockInScreenState extends ConsumerState<FingerprintLockInScreen> with SingleTickerProviderStateMixin {
+class _FingerprintLockInScreenState
+    extends ConsumerState<FingerprintLockInScreen>
+    with SingleTickerProviderStateMixin {
   static const _holdDuration = Duration(milliseconds: 1200);
 
   Timer? _timer;
@@ -22,7 +27,6 @@ class _FingerprintLockInScreenState extends ConsumerState<FingerprintLockInScree
   bool _holding = false;
   final TextEditingController _nameController = TextEditingController();
   String? _nameError;
-
 
   void _showNameRequired() {
     setState(() => _nameError = 'Enter your name first');
@@ -52,14 +56,34 @@ class _FingerprintLockInScreenState extends ConsumerState<FingerprintLockInScree
     _timer?.cancel();
     _timer = Timer.periodic(const Duration(milliseconds: 16), (t) {
       final elapsed = DateTime.now().difference(start);
-      final p = (elapsed.inMilliseconds / _holdDuration.inMilliseconds).clamp(0.0, 1.0);
+      final p = (elapsed.inMilliseconds / _holdDuration.inMilliseconds).clamp(
+        0.0,
+        1.0,
+      );
       setState(() => _progress = p);
 
       if (p >= 1.0) {
         t.cancel();
         HapticFeedback.heavyImpact();
-        ref.read(playerProgressProvider.notifier).setPlayerName(_nameController.text);
-        widget.onLockedIn();
+        ref.read(playerProgressProvider.notifier).resetProgress().then((_) {
+          ref
+              .read(playerProgressProvider.notifier)
+              .setPlayerName(_nameController.text)
+              .then((_) async {
+            final prefs = await SharedPreferences.getInstance();
+            await prefs.setBool('onboarding_complete', true);
+            if (mounted) {
+              if (widget.onLockedIn != null) {
+                widget.onLockedIn!();
+              } else {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => const MainScreen()),
+                );
+              }
+            }
+          });
+        });
       }
     });
   }
@@ -99,10 +123,7 @@ class _FingerprintLockInScreenState extends ConsumerState<FingerprintLockInScree
         fit: StackFit.expand,
         children: [
           // Background art
-          Image.asset(
-            'assets/images/lockin_bg.jpg',
-            fit: BoxFit.cover,
-          ),
+          Image.asset('assets/images/lockin_bg.jpg', fit: BoxFit.cover),
           // Dark overlay + subtle blue tint
           Container(
             decoration: const BoxDecoration(
@@ -148,21 +169,34 @@ class _FingerprintLockInScreenState extends ConsumerState<FingerprintLockInScree
                   RichText(
                     textAlign: TextAlign.center,
                     text: const TextSpan(
-                      style: TextStyle(color: Colors.white70, fontSize: 15, height: 1.35),
+                      style: TextStyle(
+                        color: Colors.white70,
+                        fontSize: 15,
+                        height: 1.35,
+                      ),
                       children: [
                         TextSpan(
                           text: 'WARNING',
-                          style: TextStyle(color: AppColors.danger, fontWeight: FontWeight.w800, letterSpacing: 0.7),
+                          style: TextStyle(
+                            color: AppColors.danger,
+                            fontWeight: FontWeight.w800,
+                            letterSpacing: 0.7,
+                          ),
                         ),
-                        TextSpan(text: " - You've seen the path ahead. Choose\n"),
+                        TextSpan(
+                          text: " - You've seen the path ahead. Choose\n",
+                        ),
                         TextSpan(text: 'to walk it, or remain where you are.'),
                       ],
                     ),
                   ),
-                  
+
                   const SizedBox(height: 26),
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 14,
+                      vertical: 6,
+                    ),
                     decoration: BoxDecoration(
                       color: const Color(0x660B2236),
                       borderRadius: BorderRadius.circular(16),
@@ -172,16 +206,29 @@ class _FingerprintLockInScreenState extends ConsumerState<FingerprintLockInScree
                       controller: _nameController,
                       textAlign: TextAlign.center,
                       textCapitalization: TextCapitalization.words,
-                      style: const TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w700, letterSpacing: 0.6),
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w700,
+                        letterSpacing: 0.6,
+                      ),
                       decoration: InputDecoration(
                         border: InputBorder.none,
                         hintText: 'Enter your name',
-                        hintStyle: const TextStyle(color: Colors.white38, fontWeight: FontWeight.w600),
+                        hintStyle: const TextStyle(
+                          color: Colors.white38,
+                          fontWeight: FontWeight.w600,
+                        ),
                         errorText: _nameError,
-                        errorStyle: const TextStyle(color: AppColors.danger, fontWeight: FontWeight.w700),
+                        errorStyle: const TextStyle(
+                          color: AppColors.danger,
+                          fontWeight: FontWeight.w700,
+                        ),
                       ),
                       onChanged: (_) {
-                        if (_nameError != null) setState(() => _nameError = null);
+                        if (_nameError != null) {
+                          setState(() => _nameError = null);
+                        }
                       },
                     ),
                   ),
@@ -189,7 +236,9 @@ class _FingerprintLockInScreenState extends ConsumerState<FingerprintLockInScree
                   const Spacer(),
                   GestureDetector(
                     onTap: () {
-                      if (_nameController.text.trim().isEmpty) _showNameRequired();
+                      if (_nameController.text.trim().isEmpty) {
+                        _showNameRequired();
+                      }
                     },
                     onLongPressStart: (_) => _startHold(),
                     onLongPressEnd: (_) => _cancelHold(),
@@ -208,13 +257,18 @@ class _FingerprintLockInScreenState extends ConsumerState<FingerprintLockInScree
                                   value: _progress,
                                   strokeWidth: 5,
                                   backgroundColor: Colors.white12,
-                                  valueColor: const AlwaysStoppedAnimation<Color>(AppColors.primary),
+                                  valueColor:
+                                      const AlwaysStoppedAnimation<Color>(
+                                        AppColors.primary,
+                                      ),
                                 ),
                               ),
                               Icon(
                                 Icons.fingerprint_rounded,
                                 size: 72,
-                                color: _holding ? AppColors.primary : Colors.white54,
+                                color: _holding
+                                    ? AppColors.primary
+                                    : Colors.white54,
                               ),
                             ],
                           ),

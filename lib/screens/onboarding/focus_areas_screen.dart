@@ -20,75 +20,107 @@ class FocusAreasScreen extends ConsumerWidget {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
-          child: Column(
-            children: [
-              const TopProgressBar(currentStep: 4, totalSteps: 13),
-              const SizedBox(height: 30),
-              Text('Choose your focus areas', style: Theme.of(context).textTheme.displaySmall),
-              const SizedBox(height: 30),
-              Expanded(
-                child: ListView(
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                const TopProgressBar(currentStep: 4, totalSteps: 13),
+                const SizedBox(height: 30),
+                Text(
+                  'Choose your focus areas',
+                  style: Theme.of(context).textTheme.displaySmall,
+                ),
+                const SizedBox(height: 30),
+                ListView(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
                   children: [
                     MultiSelectTile(
                       title: 'Full Body',
                       iconRight: Icons.accessibility_new,
-                      selected: onboardingModel.focusAreas.contains(FocusArea.fullBody),
-                      onTap: () => onboardingNotifier.toggleFocusArea(FocusArea.fullBody),
+                      selected: onboardingModel.focusAreas.contains(
+                        FocusArea.fullBody,
+                      ),
+                      onTap: () => onboardingNotifier.toggleFocusArea(
+                        FocusArea.fullBody,
+                      ),
                     ),
                     const SizedBox(height: 16),
                     MultiSelectTile(
                       title: 'Chest',
                       iconRight: Icons.sports_gymnastics,
-                      selected: onboardingModel.focusAreas.contains(FocusArea.chest),
-                      onTap: () => onboardingNotifier.toggleFocusArea(FocusArea.chest),
+                      selected: onboardingModel.focusAreas.contains(
+                        FocusArea.chest,
+                      ),
+                      onTap: () =>
+                          onboardingNotifier.toggleFocusArea(FocusArea.chest),
                     ),
                     const SizedBox(height: 16),
                     MultiSelectTile(
                       title: 'Back',
                       iconRight: Icons.sports_gymnastics,
-                      selected: onboardingModel.focusAreas.contains(FocusArea.back),
-                      onTap: () => onboardingNotifier.toggleFocusArea(FocusArea.back),
+                      selected: onboardingModel.focusAreas.contains(
+                        FocusArea.back,
+                      ),
+                      onTap: () =>
+                          onboardingNotifier.toggleFocusArea(FocusArea.back),
                     ),
                     const SizedBox(height: 16),
                     MultiSelectTile(
                       title: 'Arms',
                       iconRight: Icons.fitness_center,
-                      selected: onboardingModel.focusAreas.contains(FocusArea.arms),
-                      onTap: () => onboardingNotifier.toggleFocusArea(FocusArea.arms),
+                      selected: onboardingModel.focusAreas.contains(
+                        FocusArea.arms,
+                      ),
+                      onTap: () =>
+                          onboardingNotifier.toggleFocusArea(FocusArea.arms),
                     ),
                     const SizedBox(height: 16),
                     MultiSelectTile(
                       title: 'Shoulders',
                       iconRight: Icons.sports_gymnastics,
-                      selected: onboardingModel.focusAreas.contains(FocusArea.shoulders),
-                      onTap: () => onboardingNotifier.toggleFocusArea(FocusArea.shoulders),
+                      selected: onboardingModel.focusAreas.contains(
+                        FocusArea.shoulders,
+                      ),
+                      onTap: () => onboardingNotifier.toggleFocusArea(
+                        FocusArea.shoulders,
+                      ),
                     ),
                     const SizedBox(height: 16),
                     MultiSelectTile(
                       title: 'Abs',
                       iconRight: Icons.sports_gymnastics,
-                      selected: onboardingModel.focusAreas.contains(FocusArea.abs),
-                      onTap: () => onboardingNotifier.toggleFocusArea(FocusArea.abs),
+                      selected: onboardingModel.focusAreas.contains(
+                        FocusArea.abs,
+                      ),
+                      onTap: () =>
+                          onboardingNotifier.toggleFocusArea(FocusArea.abs),
                     ),
-                     const SizedBox(height: 16),
+                    const SizedBox(height: 16),
                     MultiSelectTile(
                       title: 'Legs',
                       iconRight: Icons.sports_gymnastics,
-                      selected: onboardingModel.focusAreas.contains(FocusArea.legs),
-                      onTap: () => onboardingNotifier.toggleFocusArea(FocusArea.legs),
+                      selected: onboardingModel.focusAreas.contains(
+                        FocusArea.legs,
+                      ),
+                      onTap: () =>
+                          onboardingNotifier.toggleFocusArea(FocusArea.legs),
                     ),
                   ],
                 ),
-              ),
-              BottomCTAButton(
-                text: 'Continue',
-                enabled: onboardingModel.focusAreas.isNotEmpty,
-                onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(builder: (_) => const FitnessLevelScreen()));
-                },
-              ),
-              const SizedBox(height: 50),
-            ],
+                BottomCTAButton(
+                  text: 'Continue',
+                  enabled: onboardingModel.focusAreas.isNotEmpty,
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (_) => const FitnessLevelScreen(),
+                      ),
+                    );
+                  },
+                ),
+                const SizedBox(height: 50),
+              ],
+            ),
           ),
         ),
       ),

@@ -89,12 +89,13 @@ class OnboardingNotifier extends StateNotifier<OnboardingModel> {
     }
     state = state.copyWith(workoutDays: newWorkoutDays);
   }
-  
+
   void setReminders(bool enabled) {
     state = state.copyWith(remindersEnabled: enabled);
   }
 }
 
-final onboardingProvider = StateNotifierProvider<OnboardingNotifier, OnboardingModel>((ref) {
-  return OnboardingNotifier();
-});
+final onboardingProvider =
+    StateNotifierProvider<OnboardingNotifier, OnboardingModel>((ref) {
+      return OnboardingNotifier();
+    });

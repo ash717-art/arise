@@ -7,6 +7,9 @@ class PlayerProgress {
   final int xpIntoLevel; // 0..xpPerLevel-1
   final int level; // starts at 1
   final String playerName; // display name
+  final int currentStreak;
+  final int highestStreak;
+  final DateTime? lastQuestCompletionDate;
 
   const PlayerProgress({
     required this.startDate,
@@ -15,6 +18,9 @@ class PlayerProgress {
     required this.xpIntoLevel,
     required this.level,
     required this.playerName,
+    this.currentStreak = 0,
+    this.highestStreak = 0,
+    this.lastQuestCompletionDate,
   });
 
   static const int xpPerLevel = 500;
@@ -27,6 +33,9 @@ class PlayerProgress {
     int? xpIntoLevel,
     int? level,
     String? playerName,
+    int? currentStreak,
+    int? highestStreak,
+    DateTime? lastQuestCompletionDate,
   }) {
     return PlayerProgress(
       startDate: startDate ?? this.startDate,
@@ -35,6 +44,10 @@ class PlayerProgress {
       xpIntoLevel: xpIntoLevel ?? this.xpIntoLevel,
       level: level ?? this.level,
       playerName: playerName ?? this.playerName,
+      currentStreak: currentStreak ?? this.currentStreak,
+      highestStreak: highestStreak ?? this.highestStreak,
+      lastQuestCompletionDate:
+          lastQuestCompletionDate ?? this.lastQuestCompletionDate,
     );
   }
 
@@ -60,13 +73,16 @@ class PlayerProgress {
   }
 
   Map<String, dynamic> toJson() => {
-        'startDate': startDate.toIso8601String(),
-        'questsCompleted': questsCompleted,
-        'totalXp': totalXp,
-        'xpIntoLevel': xpIntoLevel,
-        'level': level,
-        'playerName': playerName,
-      };
+    'startDate': startDate.toIso8601String(),
+    'questsCompleted': questsCompleted,
+    'totalXp': totalXp,
+    'xpIntoLevel': xpIntoLevel,
+    'level': level,
+    'playerName': playerName,
+    'currentStreak': currentStreak,
+    'highestStreak': highestStreak,
+    'lastQuestCompletionDate': lastQuestCompletionDate?.toIso8601String(),
+  };
 
   static PlayerProgress fromJson(Map<String, dynamic> json) {
     return PlayerProgress(
@@ -76,6 +92,10 @@ class PlayerProgress {
       xpIntoLevel: (json['xpIntoLevel'] ?? 0) as int,
       level: (json['level'] ?? 1) as int,
       playerName: (json['playerName'] ?? 'PLAYER ONE') as String,
+      currentStreak: (json['currentStreak'] ?? 0) as int,
+      highestStreak: (json['highestStreak'] ?? 0) as int,
+      lastQuestCompletionDate:
+          DateTime.tryParse(json['lastQuestCompletionDate'] ?? ''),
     );
   }
 
@@ -88,6 +108,9 @@ class PlayerProgress {
         xpIntoLevel: 0,
         level: 1,
         playerName: 'PLAYER ONE',
+        currentStreak: 0,
+        highestStreak: 0,
+        lastQuestCompletionDate: null,
       );
     }
     return fromJson(jsonDecode(raw) as Map<String, dynamic>);

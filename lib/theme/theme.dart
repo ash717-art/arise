@@ -18,7 +18,6 @@ class AppTheme {
   static const Color dangerRed = Color(0xFFD83A3A);
   static const Color mutedGreyLine = Color(0x808A97A6); // ~50% opacity
 
-
   static final ThemeData darkTheme = ThemeData(
     useMaterial3: true,
     scaffoldBackgroundColor: backgroundEnd,
@@ -33,25 +32,62 @@ class AppTheme {
       brightness: Brightness.dark,
     ),
     textTheme: TextTheme(
-      displayLarge: GoogleFonts.poppins(fontSize: 24, fontWeight: FontWeight.bold, color: textPrimary),
-      displayMedium: GoogleFonts.poppins(fontSize: 22, fontWeight: FontWeight.bold, color: textPrimary),
-      displaySmall: GoogleFonts.poppins(fontSize: 20, fontWeight: FontWeight.bold, color: textPrimary),
-      headlineMedium: GoogleFonts.poppins(fontSize: 18, fontWeight: FontWeight.w600, color: textPrimary),
-      headlineSmall: GoogleFonts.poppins(fontSize: 16, fontWeight: FontWeight.w600, color: textPrimary),
-      titleLarge: GoogleFonts.poppins(fontSize: 14, fontWeight: FontWeight.w600, color: textPrimary),
-      bodyLarge: GoogleFonts.poppins(fontSize: 16, fontWeight: FontWeight.normal, color: textPrimary),
-      bodyMedium: GoogleFonts.poppins(fontSize: 14, fontWeight: FontWeight.normal, color: textSecondary),
-      bodySmall: GoogleFonts.poppins(fontSize: 12, fontWeight: FontWeight.normal, color: textSecondary),
+      displayLarge: GoogleFonts.oxanium(
+        fontSize: 24,
+        fontWeight: FontWeight.bold,
+        color: textPrimary,
+      ),
+      displayMedium: GoogleFonts.oxanium(
+        fontSize: 22,
+        fontWeight: FontWeight.bold,
+        color: textPrimary,
+      ),
+      displaySmall: GoogleFonts.oxanium(
+        fontSize: 20,
+        fontWeight: FontWeight.bold,
+        color: textPrimary,
+      ),
+      headlineMedium: GoogleFonts.oxanium(
+        fontSize: 18,
+        fontWeight: FontWeight.w600,
+        color: textPrimary,
+      ),
+      headlineSmall: GoogleFonts.oxanium(
+        fontSize: 16,
+        fontWeight: FontWeight.w600,
+        color: textPrimary,
+      ),
+      titleLarge: GoogleFonts.oxanium(
+        fontSize: 14,
+        fontWeight: FontWeight.w600,
+        color: textPrimary,
+      ),
+      bodyLarge: GoogleFonts.oxanium(
+        fontSize: 16,
+        fontWeight: FontWeight.normal,
+        color: textPrimary,
+      ),
+      bodyMedium: GoogleFonts.oxanium(
+        fontSize: 14,
+        fontWeight: FontWeight.normal,
+        color: textSecondary,
+      ),
+      bodySmall: GoogleFonts.oxanium(
+        fontSize: 12,
+        fontWeight: FontWeight.normal,
+        color: textSecondary,
+      ),
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
         backgroundColor: textPrimary,
         foregroundColor: primaryCtaText,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(30),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
         padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
-        textStyle: GoogleFonts.poppins(fontSize: 16, fontWeight: FontWeight.bold),
+        textStyle: GoogleFonts.oxanium(
+          fontSize: 16,
+          fontWeight: FontWeight.bold,
+        ),
       ),
     ),
     sliderTheme: SliderThemeData(

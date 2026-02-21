@@ -1,10 +1,24 @@
 enum Gender { male, female, other }
+
 enum Goal { buildMuscle, loseWeight, lookBetter, stayInShape }
-enum Motivation { health, weightLoss, appearance, stressRelief, socialSupport, enjoyment }
+
+enum Motivation {
+  health,
+  weightLoss,
+  appearance,
+  stressRelief,
+  socialSupport,
+  enjoyment,
+}
+
 enum FocusArea { fullBody, chest, back, arms, shoulders, abs, legs }
+
 enum FitnessLevel { beginner, intermediate, advanced }
+
 enum ActivityLevel { sedentary, lightly, moderately, very }
+
 enum HealthIssue { none, knee, hip, back, arms, noJumps }
+
 enum Equipment { none, fullGym, barbells, dumbbells, kettlebells, machines }
 
 class OnboardingModel {

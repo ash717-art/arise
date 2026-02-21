@@ -7,7 +7,9 @@ import 'package:myapp/models/quest_model.dart';
 import 'package:myapp/providers/onboarding_provider.dart';
 import 'package:myapp/services/exercise_service.dart';
 
-final exerciseServiceProvider = Provider<ExerciseService>((ref) => ExerciseService());
+final exerciseServiceProvider = Provider<ExerciseService>(
+  (ref) => ExerciseService(),
+);
 
 final questServiceProvider = Provider<QuestService>((ref) {
   final onboardingModel = ref.watch(onboardingProvider);
@@ -19,7 +21,6 @@ final dailyQuestProvider = FutureProvider<Quest>((ref) async {
   final questService = ref.watch(questServiceProvider);
   return questService.generateDailyQuest(DateTime.now());
 });
-
 
 class QuestService {
   final OnboardingModel onboardingModel;
@@ -34,13 +35,21 @@ class QuestService {
     final genderName = onboardingModel.gender?.name ?? 'unknown';
     final goalName = onboardingModel.goal?.name ?? 'stayInShape';
     final focusNames = onboardingModel.focusAreas.map((e) => e.name).join(',');
-    final rng = Random(_stableSeed('$dayKey:$genderName:$goalName:$focusNames'));
+    final rng = Random(
+      _stableSeed('$dayKey:$genderName:$goalName:$focusNames'),
+    );
 
     // Pull exercises matching user's focus. If full body selected, we mix categories.
     final focusAreas = onboardingModel.focusAreas;
     final goal = onboardingModel.goal ?? Goal.stayInShape;
 
-    final pool = exerciseService.getExercisesForFocus(focusAreas, goal: goal, availableEquipment: onboardingModel.equipment.isEmpty ? const [Equipment.none] : onboardingModel.equipment);
+    final pool = exerciseService.getExercisesForFocus(
+      focusAreas,
+      goal: goal,
+      availableEquipment: onboardingModel.equipment.isEmpty
+          ? const [Equipment.none]
+          : onboardingModel.equipment,
+    );
 
     // Choose 4-6 unique exercises depending on fitness level.
     final count = switch (onboardingModel.fitnessLevel) {
@@ -54,11 +63,20 @@ class QuestService {
 
     // Sets/reps tuned by goal + fitness level.
     final questExercises = selected.map((ex) {
-      final (sets, reps) = _prescriptionFor(ex, goal, onboardingModel.fitnessLevel ?? FitnessLevel.beginner, rng);
+      final (sets, reps) = _prescriptionFor(
+        ex,
+        goal,
+        onboardingModel.fitnessLevel ?? FitnessLevel.beginner,
+        rng,
+      );
       return QuestExercise(exercise: ex, sets: sets, reps: reps);
     }).toList();
 
-    final xpReward = _computeXpReward(questExercises.length, onboardingModel.fitnessLevel ?? FitnessLevel.beginner, rng);
+    final xpReward = _computeXpReward(
+      questExercises.length,
+      onboardingModel.fitnessLevel ?? FitnessLevel.beginner,
+      rng,
+    );
 
     final summary = _makeSummary(goal, focusAreas, rng);
 
@@ -92,10 +110,10 @@ class QuestService {
 
     // Goal adjusts reps (muscle => moderate, weight loss => slightly higher).
     int baseReps = switch (goal) {
-      Goal.buildMuscle => 8 + rng.nextInt(5),     // 8-12
-      Goal.loseWeight => 10 + rng.nextInt(7),     // 10-16
-      Goal.lookBetter => 10 + rng.nextInt(5),     // 10-14
-      Goal.stayInShape => 10 + rng.nextInt(5),    // 10-14
+      Goal.buildMuscle => 8 + rng.nextInt(5), // 8-12
+      Goal.loseWeight => 10 + rng.nextInt(7), // 10-16
+      Goal.lookBetter => 10 + rng.nextInt(5), // 10-14
+      Goal.stayInShape => 10 + rng.nextInt(5), // 10-14
     };
 
     // Conditioning moves get higher reps.
@@ -121,10 +139,13 @@ class QuestService {
     final focusText = focus.contains(FocusArea.fullBody)
         ? 'the entire body'
         : focus.isEmpty
-            ? 'full body'
-            : focus.length > 1
-                ? 'multiple systems'
-                : focus.first.name.replaceAllMapped(RegExp(r'([A-Z])'), (m) => ' ${m[1]}').trim().toLowerCase();
+        ? 'full body'
+        : focus.length > 1
+        ? 'multiple systems'
+        : focus.first.name
+              .replaceAllMapped(RegExp(r'([A-Z])'), (m) => ' ${m[1]}')
+              .trim()
+              .toLowerCase();
 
     final openers = [
       'Basic bodyweight exercises targeting $focusText to build strength and endurance.',
@@ -134,16 +155,21 @@ class QuestService {
     ];
 
     final goalLine = switch (goal) {
-      Goal.buildMuscle => 'Prioritize tension and full range—this is for muscle growth.',
-      Goal.loseWeight => 'Keep rest short and pace steady—this supports fat loss.',
-      Goal.lookBetter => 'Move with control—this improves posture, shape, and definition.',
-      Goal.stayInShape => 'Stay consistent—this maintains strength and conditioning.',
+      Goal.buildMuscle =>
+        'Prioritize tension and full range—this is for muscle growth.',
+      Goal.loseWeight =>
+        'Keep rest short and pace steady—this supports fat loss.',
+      Goal.lookBetter =>
+        'Move with control—this improves posture, shape, and definition.',
+      Goal.stayInShape =>
+        'Stay consistent—this maintains strength and conditioning.',
     };
 
     return '${openers[rng.nextInt(openers.length)]}\n$goalLine';
   }
 
-  String _dayKey(DateTime date) => '${date.year}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}';
+  String _dayKey(DateTime date) =>
+      '${date.year}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}';
 
   int _stableSeed(String input) {
     // Simple stable hash

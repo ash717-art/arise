@@ -20,48 +20,66 @@ class ActivityLevelScreen extends ConsumerWidget {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
-          child: Column(
-            children: [
-              const TopProgressBar(currentStep: 6, totalSteps: 13),
-              const SizedBox(height: 30),
-              Text('What is your activity level?', style: Theme.of(context).textTheme.displaySmall),
-              const SizedBox(height: 30),
-              OptionTile(
-                title: 'Sedentary',
-                selected: onboardingModel.activityLevel == ActivityLevel.sedentary,
-                onTap: () => onboardingNotifier.setActivityLevel(ActivityLevel.sedentary),
-              ),
-              const SizedBox(height: 16),
-              OptionTile(
-                title: 'Lightly Active',
-                subtitle: '1–3 days/week',
-                selected: onboardingModel.activityLevel == ActivityLevel.lightly,
-                onTap: () => onboardingNotifier.setActivityLevel(ActivityLevel.lightly),
-              ),
-              const SizedBox(height: 16),
-              OptionTile(
-                title: 'Moderately Active',
-                subtitle: '4–6 days/week',
-                selected: onboardingModel.activityLevel == ActivityLevel.moderately,
-                onTap: () => onboardingNotifier.setActivityLevel(ActivityLevel.moderately),
-              ),
-              const SizedBox(height: 16),
-              OptionTile(
-                title: 'Very Active',
-                subtitle: 'Hard exercise daily',
-                selected: onboardingModel.activityLevel == ActivityLevel.very,
-                onTap: () => onboardingNotifier.setActivityLevel(ActivityLevel.very),
-              ),
-              const Spacer(),
-              BottomCTAButton(
-                text: 'Continue',
-                enabled: onboardingModel.activityLevel != null,
-                onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(builder: (_) => const CurrentWeightScreen()));
-                },
-              ),
-              const SizedBox(height: 50),
-            ],
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                const TopProgressBar(currentStep: 6, totalSteps: 13),
+                const SizedBox(height: 30),
+                Text(
+                  'What is your activity level?',
+                  style: Theme.of(context).textTheme.displaySmall,
+                ),
+                const SizedBox(height: 30),
+                OptionTile(
+                  title: 'Sedentary',
+                  selected:
+                      onboardingModel.activityLevel == ActivityLevel.sedentary,
+                  onTap: () => onboardingNotifier.setActivityLevel(
+                    ActivityLevel.sedentary,
+                  ),
+                ),
+                const SizedBox(height: 16),
+                OptionTile(
+                  title: 'Lightly Active',
+                  subtitle: '1–3 days/week',
+                  selected:
+                      onboardingModel.activityLevel == ActivityLevel.lightly,
+                  onTap: () => onboardingNotifier.setActivityLevel(
+                    ActivityLevel.lightly,
+                  ),
+                ),
+                const SizedBox(height: 16),
+                OptionTile(
+                  title: 'Moderately Active',
+                  subtitle: '4–6 days/week',
+                  selected:
+                      onboardingModel.activityLevel == ActivityLevel.moderately,
+                  onTap: () => onboardingNotifier.setActivityLevel(
+                    ActivityLevel.moderately,
+                  ),
+                ),
+                const SizedBox(height: 16),
+                OptionTile(
+                  title: 'Very Active',
+                  subtitle: 'Hard exercise daily',
+                  selected: onboardingModel.activityLevel == ActivityLevel.very,
+                  onTap: () =>
+                      onboardingNotifier.setActivityLevel(ActivityLevel.very),
+                ),
+                BottomCTAButton(
+                  text: 'Continue',
+                  enabled: onboardingModel.activityLevel != null,
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (_) => const CurrentWeightScreen(),
+                      ),
+                    );
+                  },
+                ),
+                const SizedBox(height: 50),
+              ],
+            ),
           ),
         ),
       ),

@@ -21,39 +21,66 @@ class HeightScreen extends ConsumerWidget {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
-          child: Column(
-            children: [
-              const TopProgressBar(currentStep: 9, totalSteps: 13),
-              const SizedBox(height: 30),
-              Text('What is your height?', style: Theme.of(context).textTheme.displaySmall),
-              const SizedBox(height: 30),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  CupertinoButton(
-                    child: Text('cm', style: TextStyle(color: isCm ? AppTheme.primaryAccent : AppTheme.textSecondary)),
-                    onPressed: () => onboardingNotifier.setHeightUnit('cm'),
-                  ),
-                  CupertinoButton(
-                    child: Text('ft-in', style: TextStyle(color: !isCm ? AppTheme.primaryAccent : AppTheme.textSecondary)),
-                    onPressed: () => onboardingNotifier.setHeightUnit('ft-in'),
-                  ),
-                ],
-              ),
-              Expanded(
-                child: isCm
-                    ? _buildCmPicker(onboardingModel.height, onboardingNotifier)
-                    : _buildFtInPicker(onboardingModel.height, ref),
-              ),
-              const Spacer(),
-              BottomCTAButton(
-                text: 'Continue',
-                onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(builder: (_) => const HealthIssuesScreen()));
-                },
-              ),
-              const SizedBox(height: 50),
-            ],
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                const TopProgressBar(currentStep: 9, totalSteps: 13),
+                const SizedBox(height: 30),
+                Text(
+                  'What is your height?',
+                  style: Theme.of(context).textTheme.displaySmall,
+                ),
+                const SizedBox(height: 30),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CupertinoButton(
+                      child: Text(
+                        'cm',
+                        style: TextStyle(
+                          color: isCm
+                              ? AppTheme.primaryAccent
+                              : AppTheme.textSecondary,
+                        ),
+                      ),
+                      onPressed: () => onboardingNotifier.setHeightUnit('cm'),
+                    ),
+                    CupertinoButton(
+                      child: Text(
+                        'ft-in',
+                        style: TextStyle(
+                          color: !isCm
+                              ? AppTheme.primaryAccent
+                              : AppTheme.textSecondary,
+                        ),
+                      ),
+                      onPressed: () =>
+                          onboardingNotifier.setHeightUnit('ft-in'),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 200,
+                  child: isCm
+                      ? _buildCmPicker(
+                          onboardingModel.height,
+                          onboardingNotifier,
+                        )
+                      : _buildFtInPicker(onboardingModel.height, ref),
+                ),
+                BottomCTAButton(
+                  text: 'Continue',
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (_) => const HealthIssuesScreen(),
+                      ),
+                    );
+                  },
+                ),
+                const SizedBox(height: 50),
+              ],
+            ),
           ),
         ),
       ),
@@ -63,12 +90,19 @@ class HeightScreen extends ConsumerWidget {
   Widget _buildCmPicker(double height, OnboardingNotifier notifier) {
     return CupertinoPicker(
       itemExtent: 50,
-      scrollController: FixedExtentScrollController(initialItem: height.toInt() - 120),
+      scrollController: FixedExtentScrollController(
+        initialItem: height.toInt() - 120,
+      ),
       onSelectedItemChanged: (int index) {
         notifier.setHeight((index + 120).toDouble());
       },
       children: List<Widget>.generate(131, (int index) {
-        return Center(child: Text('${index + 120}', style: const TextStyle(color: Colors.white, fontSize: 24)));
+        return Center(
+          child: Text(
+            '${index + 120}',
+            style: const TextStyle(color: Colors.white, fontSize: 24),
+          ),
+        );
       }),
     );
   }
@@ -89,30 +123,47 @@ class HeightScreen extends ConsumerWidget {
         Expanded(
           child: CupertinoPicker(
             itemExtent: 50,
-            scrollController: FixedExtentScrollController(initialItem: initialFeet),
+            scrollController: FixedExtentScrollController(
+              initialItem: initialFeet,
+            ),
             onSelectedItemChanged: (int feetIndex) {
               final newFeet = feetIndex + 4;
-              final currentInches = ((ref.read(onboardingProvider).height / 2.54) % 12).round();
+              final currentInches =
+                  ((ref.read(onboardingProvider).height / 2.54) % 12).round();
               final newHeight = (newFeet * 12 + currentInches) * 2.54;
               notifier.setHeight(newHeight);
             },
-            children: List<Widget>.generate(5, (int index) { // 4ft to 8ft
-              return Center(child: Text('${index + 4} ft', style: const TextStyle(color: Colors.white, fontSize: 24)));
+            children: List<Widget>.generate(5, (int index) {
+              // 4ft to 8ft
+              return Center(
+                child: Text(
+                  '${index + 4} ft',
+                  style: const TextStyle(color: Colors.white, fontSize: 24),
+                ),
+              );
             }),
           ),
         ),
         Expanded(
           child: CupertinoPicker(
             itemExtent: 50,
-            scrollController: FixedExtentScrollController(initialItem: initialInches),
+            scrollController: FixedExtentScrollController(
+              initialItem: initialInches,
+            ),
             onSelectedItemChanged: (int inchIndex) {
               final newInches = inchIndex;
-              final currentFeet = ((ref.read(onboardingProvider).height / 2.54) ~/ 12);
+              final currentFeet =
+                  ((ref.read(onboardingProvider).height / 2.54) ~/ 12);
               final newHeight = (currentFeet * 12 + newInches) * 2.54;
               notifier.setHeight(newHeight);
             },
             children: List<Widget>.generate(12, (int index) {
-              return Center(child: Text('$index in', style: const TextStyle(color: Colors.white, fontSize: 24)));
+              return Center(
+                child: Text(
+                  '$index in',
+                  style: const TextStyle(color: Colors.white, fontSize: 24),
+                ),
+              );
             }),
           ),
         ),

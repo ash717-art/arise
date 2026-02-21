@@ -20,42 +20,57 @@ class FitnessLevelScreen extends ConsumerWidget {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
-          child: Column(
-            children: [
-              const TopProgressBar(currentStep: 5, totalSteps: 13),
-              const SizedBox(height: 30),
-              Text('What is your fitness level?', style: Theme.of(context).textTheme.displaySmall),
-              const SizedBox(height: 30),
-              OptionTile(
-                title: 'Beginner',
-                subtitle: 'I’m new or have only tried it for a bit',
-                selected: onboardingModel.fitnessLevel == FitnessLevel.beginner,
-                onTap: () => onboardingNotifier.setFitnessLevel(FitnessLevel.beginner),
-              ),
-              const SizedBox(height: 16),
-              OptionTile(
-                title: 'Intermediate',
-                subtitle: 'I’ve lifted weights before',
-                selected: onboardingModel.fitnessLevel == FitnessLevel.intermediate,
-                onTap: () => onboardingNotifier.setFitnessLevel(FitnessLevel.intermediate),
-              ),
-              const SizedBox(height: 16),
-              OptionTile(
-                title: 'Advanced',
-                subtitle: 'I’ve been lifting weights for a while',
-                selected: onboardingModel.fitnessLevel == FitnessLevel.advanced,
-                onTap: () => onboardingNotifier.setFitnessLevel(FitnessLevel.advanced),
-              ),
-              const Spacer(),
-              BottomCTAButton(
-                text: 'Continue',
-                enabled: onboardingModel.fitnessLevel != null,
-                onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(builder: (_) => const ActivityLevelScreen()));
-                },
-              ),
-              const SizedBox(height: 50),
-            ],
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                const TopProgressBar(currentStep: 5, totalSteps: 13),
+                const SizedBox(height: 30),
+                Text(
+                  'What is your fitness level?',
+                  style: Theme.of(context).textTheme.displaySmall,
+                ),
+                const SizedBox(height: 30),
+                OptionTile(
+                  title: 'Beginner',
+                  subtitle: 'I’m new or have only tried it for a bit',
+                  selected:
+                      onboardingModel.fitnessLevel == FitnessLevel.beginner,
+                  onTap: () =>
+                      onboardingNotifier.setFitnessLevel(FitnessLevel.beginner),
+                ),
+                const SizedBox(height: 16),
+                OptionTile(
+                  title: 'Intermediate',
+                  subtitle: 'I’ve lifted weights before',
+                  selected:
+                      onboardingModel.fitnessLevel == FitnessLevel.intermediate,
+                  onTap: () => onboardingNotifier.setFitnessLevel(
+                    FitnessLevel.intermediate,
+                  ),
+                ),
+                const SizedBox(height: 16),
+                OptionTile(
+                  title: 'Advanced',
+                  subtitle: 'I’ve been lifting weights for a while',
+                  selected:
+                      onboardingModel.fitnessLevel == FitnessLevel.advanced,
+                  onTap: () =>
+                      onboardingNotifier.setFitnessLevel(FitnessLevel.advanced),
+                ),
+                BottomCTAButton(
+                  text: 'Continue',
+                  enabled: onboardingModel.fitnessLevel != null,
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (_) => const ActivityLevelScreen(),
+                      ),
+                    );
+                  },
+                ),
+                const SizedBox(height: 50),
+              ],
+            ),
           ),
         ),
       ),

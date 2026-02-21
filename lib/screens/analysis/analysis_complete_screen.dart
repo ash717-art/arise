@@ -45,16 +45,17 @@ class AnalysisCompleteScreen extends ConsumerWidget {
     }
 
     final workoutFrequencyWeight = model.workoutsPerWeek.toDouble();
-    final goalConsistencyWeight =
-        (model.targetWeight - model.currentWeight).abs();
+    final goalConsistencyWeight = (model.targetWeight - model.currentWeight)
+        .abs();
     final motivationWeight = model.motivations.length.toDouble();
 
-    final score = (activityWeight * 0.25) +
+    final score =
+        (activityWeight * 0.25) +
         (fitnessLevelWeight * 0.2) +
         (workoutFrequencyWeight * 0.2) +
         (goalConsistencyWeight * 0.2) +
         (motivationWeight * 0.15);
-    
+
     // Normalize to a 0-100 scale, assuming max possible score is ~15-20
     return (score / 20 * 100).clamp(0, 100);
   }
@@ -64,7 +65,8 @@ class AnalysisCompleteScreen extends ConsumerWidget {
     final onboardingModel = ref.watch(onboardingProvider);
     final potentialScore = _calculatePotentialScore(onboardingModel);
     const averageScore = 65.0; // Assumption for average demographic
-    final wastedPotential = ((averageScore - potentialScore) / averageScore * 100).clamp(0, 100);
+    final wastedPotential =
+        ((averageScore - potentialScore) / averageScore * 100).clamp(0, 100);
 
     return Scaffold(
       body: Container(
@@ -90,8 +92,11 @@ class AnalysisCompleteScreen extends ConsumerWidget {
                       style: Theme.of(context).textTheme.displayMedium,
                     ),
                     const SizedBox(width: 8),
-                    const Icon(Icons.check_circle,
-                        color: AppTheme.successGreen, size: 30),
+                    const Icon(
+                      Icons.check_circle,
+                      color: AppTheme.successGreen,
+                      size: 30,
+                    ),
                   ],
                 ),
                 const SizedBox(height: 40),
@@ -111,32 +116,53 @@ class AnalysisCompleteScreen extends ConsumerWidget {
                               String text = '';
                               if (value == 0) text = 'YOU';
                               if (value == 1) text = 'AVERAGE';
-                              return SideTitleWidget(axisSide: meta.axisSide, space: 4.0, child: Text(text, style: Theme.of(context).textTheme.bodyMedium));
+                              return SideTitleWidget(
+                                axisSide: meta.axisSide,
+                                space: 4.0,
+                                child: Text(
+                                  text,
+                                  style: Theme.of(context).textTheme.bodyMedium,
+                                ),
+                              );
                             },
                             reservedSize: 30,
                           ),
                         ),
-                        leftTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
-                        topTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
-                        rightTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                        leftTitles: const AxisTitles(
+                          sideTitles: SideTitles(showTitles: false),
+                        ),
+                        topTitles: const AxisTitles(
+                          sideTitles: SideTitles(showTitles: false),
+                        ),
+                        rightTitles: const AxisTitles(
+                          sideTitles: SideTitles(showTitles: false),
+                        ),
                       ),
                       gridData: const FlGridData(show: false),
                       borderData: FlBorderData(show: false),
                       barGroups: [
-                        BarChartGroupData(x: 0, barRods: [
-                          BarChartRodData(
+                        BarChartGroupData(
+                          x: 0,
+                          barRods: [
+                            BarChartRodData(
                               toY: potentialScore,
                               color: AppTheme.dangerRed,
                               width: 40,
-                              borderRadius: BorderRadius.circular(8)),
-                        ]),
-                        BarChartGroupData(x: 1, barRods: [
-                          BarChartRodData(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                          ],
+                        ),
+                        BarChartGroupData(
+                          x: 1,
+                          barRods: [
+                            BarChartRodData(
                               toY: averageScore,
                               color: AppTheme.mutedGreyLine,
                               width: 40,
-                              borderRadius: BorderRadius.circular(8)),
-                        ]),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                          ],
+                        ),
                       ],
                     ),
                   ),
@@ -149,7 +175,8 @@ class AnalysisCompleteScreen extends ConsumerWidget {
                     children: [
                       const TextSpan(text: "You're wasting "),
                       TextSpan(
-                        text: '${wastedPotential.toStringAsFixed(0)}% potential',
+                        text:
+                            '${wastedPotential.toStringAsFixed(0)}% potential',
                         style: const TextStyle(color: AppTheme.dangerRed),
                       ),
                       const TextSpan(text: ' compared to average.'),
@@ -176,7 +203,8 @@ class AnalysisCompleteScreen extends ConsumerWidget {
                   onTap: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
-                          builder: (_) => const ProjectionScreen()),
+                        builder: (_) => const ProjectionScreen(),
+                      ),
                     );
                   },
                 ),

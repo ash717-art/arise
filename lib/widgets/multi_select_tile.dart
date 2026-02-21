@@ -33,7 +33,10 @@ class MultiSelectTile extends StatelessWidget {
         child: Row(
           children: [
             Expanded(
-              child: Text(title, style: Theme.of(context).textTheme.headlineSmall),
+              child: Text(
+                title,
+                style: Theme.of(context).textTheme.headlineSmall,
+              ),
             ),
             if (iconRight != null)
               Icon(iconRight, color: AppTheme.textSecondary, size: 28),

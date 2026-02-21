@@ -29,14 +29,12 @@ class MainScreen extends ConsumerWidget {
             end: Alignment.bottomCenter,
           ),
         ),
-        child: IndexedStack(
-          index: currentIndex,
-          children: screens,
-        ),
+        child: IndexedStack(index: currentIndex, children: screens),
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: currentIndex,
-        onTap: (index) => ref.read(mainScreenIndexProvider.notifier).state = index,
+        onTap: (index) =>
+            ref.read(mainScreenIndexProvider.notifier).state = index,
         backgroundColor: AppTheme.tileBackground,
         selectedItemColor: AppTheme.primaryAccent,
         unselectedItemColor: AppTheme.textSecondary,

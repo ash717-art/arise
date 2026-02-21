@@ -40,10 +40,7 @@ class ProgramIntroScreen extends StatelessWidget {
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 gradient: RadialGradient(
-                  colors: [
-                    AppColors.primary.withOpacity(0.20),
-                    Colors.transparent,
-                  ],
+                  colors: [AppColors.primary.withAlpha(51), Colors.transparent],
                 ),
               ),
             ),
@@ -98,7 +95,7 @@ class ProgramIntroScreen extends StatelessWidget {
                     'Become the best version of yourself by:',
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      color: Colors.white.withOpacity(0.45),
+                      color: Colors.white.withAlpha(115),
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
                     ),
@@ -107,11 +104,14 @@ class ProgramIntroScreen extends StatelessWidget {
 
                   // Date chip
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 14),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 22,
+                      vertical: 14,
+                    ),
                     decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.06),
+                      color: Colors.white.withAlpha(15),
                       borderRadius: BorderRadius.circular(14),
-                      border: Border.all(color: Colors.white.withOpacity(0.10)),
+                      border: Border.all(color: Colors.white.withAlpha(26)),
                     ),
                     child: Text(
                       formattedEndDate,
@@ -126,7 +126,9 @@ class ProgramIntroScreen extends StatelessWidget {
 
                   _Bullet(text: 'Become more attractive and confident'),
                   const SizedBox(height: 14),
-                  _Bullet(text: 'Your physical strength will improve drastically'),
+                  _Bullet(
+                    text: 'Your physical strength will improve drastically',
+                  ),
                   const SizedBox(height: 14),
                   _Bullet(text: 'You will feel more energized than ever'),
                   const SizedBox(height: 14),
@@ -150,7 +152,8 @@ class ProgramIntroScreen extends StatelessWidget {
                       await showDialog(
                         context: context,
                         barrierDismissible: false,
-                        builder: (_) => const SyncModal(text: 'Syncing your data...'),
+                        builder: (_) =>
+                            const SyncModal(text: 'Syncing your data...'),
                       );
                       // Close modal
                       if (context.mounted) Navigator.of(context).pop();

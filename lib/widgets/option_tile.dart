@@ -46,13 +46,20 @@ class OptionTile extends StatelessWidget {
                   Text(title, style: Theme.of(context).textTheme.headlineSmall),
                   if (subtitle != null) ...[
                     const SizedBox(height: 4),
-                    Text(subtitle!, style: Theme.of(context).textTheme.bodySmall),
+                    Text(
+                      subtitle!,
+                      style: Theme.of(context).textTheme.bodySmall,
+                    ),
                   ],
                 ],
               ),
             ),
             if (selected)
-              const Icon(Icons.check_circle, color: AppTheme.primaryAccent, size: 24),
+              const Icon(
+                Icons.check_circle,
+                color: AppTheme.primaryAccent,
+                size: 24,
+              ),
           ],
         ),
       ),

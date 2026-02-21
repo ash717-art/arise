@@ -34,9 +34,15 @@ class SimpleLineChart extends StatelessWidget {
               getTitlesWidget: (value, meta) {
                 Widget text;
                 if (value.toInt() == 0) {
-                  text = Text(startLabel, style: Theme.of(context).textTheme.bodySmall);
+                  text = Text(
+                    startLabel,
+                    style: Theme.of(context).textTheme.bodySmall,
+                  );
                 } else if (value.toInt() == dataPoints.length - 1) {
-                  text = Text(endLabel, style: Theme.of(context).textTheme.bodySmall);
+                  text = Text(
+                    endLabel,
+                    style: Theme.of(context).textTheme.bodySmall,
+                  );
                 } else {
                   text = const Text('');
                 }
